@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package proto;
+
+import "proto/model.proto";
+
+option go_package = "grpc/proto";
+
+message GetProfileReq {
+    uint64 ProfileID = 1;
+}
+
+service ProfileService {
+    rpc GetProfile(GetProfileReq) returns (Profile);
+}

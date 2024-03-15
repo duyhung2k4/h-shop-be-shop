@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "grpc/proto";
+
+message User {
+    uint64 ID = 1;
+    uint64 RoleID = 2;  
+	string Username = 3;
+	string Password = 4;
+	string Email = 5;
+  
+    Role Role = 6;
+
+	google.protobuf.Timestamp CreatedAt = 7;
+	google.protobuf.Timestamp UpdatedAt = 8;
+	google.protobuf.Timestamp DeletedAt = 9;
+}
+
+message Role {
+    uint64 ID = 1;
+    string Code = 2;
+	string Name = 3;
+
+    repeated User Users = 4;
+
+	google.protobuf.Timestamp CreatedAt = 5;
+	google.protobuf.Timestamp UpdatedAt = 6;
+	google.protobuf.Timestamp DeletedAt = 7;
+}
+
+message Profile {
+    uint64 ID = 1;
+    string UserID = 2;
+	string Firstname = 3;
+	string Lastname = 4;
+	string Name = 5;
+	string Address = 6;
+	string Gender = 7;
+	google.protobuf.Timestamp Birth = 8;
+	string Phone = 9;
+	string Email = 10;
+	string Picture = 11;
+	string Sub = 12;
+
+	User User = 13;
+
+	google.protobuf.Timestamp CreatedAt = 14;
+	google.protobuf.Timestamp UpdatedAt = 15;
+	google.protobuf.Timestamp DeletedAt = 16;
+}
