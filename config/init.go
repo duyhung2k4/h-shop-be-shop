@@ -18,4 +18,5 @@ func init() {
 		log.Fatalf("Error connect Postgresql: %v", err)
 	}
 	connectRedis()
+	connectGPRC()
 }

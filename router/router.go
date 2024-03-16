@@ -2,6 +2,7 @@ package router
 
 import (
 	"app/config"
+	"app/controller"
 	"app/middlewares"
 	"net/http"
 
@@ -30,6 +31,7 @@ func Router() http.Handler {
 	app.Use(cors.Handler)
 
 	middlewares := middlewares.NewMiddlewares()
+	shopController := controller.NewShopController()
 
 	app.Route("/shop/api/v1", func(r chi.Router) {
 		r.Route("/public", func(public chi.Router) {
@@ -39,6 +41,10 @@ func Router() http.Handler {
 			protected.Use(jwtauth.Verifier(config.GetJWT()))
 			protected.Use(jwtauth.Authenticator(config.GetJWT()))
 			protected.Use(middlewares.ValidateExpAccessToken())
+
+			protected.Route("/shop", func(shop chi.Router) {
+				shop.Post("/", shopController.CreateShop)
+			})
 		})
 	})
 

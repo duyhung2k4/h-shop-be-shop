@@ -45,13 +45,13 @@ func internalServerError(w http.ResponseWriter, r *http.Request, err error) {
 	render.JSON(w, r, res)
 }
 
-// func handleError(w http.ResponseWriter, r *http.Request, err error, status int) {
-// 	res := Response{
-// 		Data:    nil,
-// 		Message: err.Error(),
-// 		Status:  status,
-// 		Error:   err,
-// 	}
-// 	w.WriteHeader(status)
-// 	render.JSON(w, r, res)
-// }
+func handleError(w http.ResponseWriter, r *http.Request, err error, status int) {
+	res := Response{
+		Data:    nil,
+		Message: err.Error(),
+		Status:  status,
+		Error:   err,
+	}
+	w.WriteHeader(status)
+	render.JSON(w, r, res)
+}

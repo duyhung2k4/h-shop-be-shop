@@ -34,7 +34,7 @@ message Role {
 
 message Profile {
     uint64 ID = 1;
-    string UserID = 2;
+    uint64 UserID = 2;
 	string Firstname = 3;
 	string Lastname = 4;
 	string Name = 5;

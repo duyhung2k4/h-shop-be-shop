@@ -3,6 +3,8 @@ package utils
 import (
 	"app/config"
 	"context"
+	"net/http"
+	"strings"
 )
 
 type jwtUtils struct{}
@@ -10,6 +12,7 @@ type jwtUtils struct{}
 type JwtUtils interface {
 	JwtEncode(data map[string]interface{}) (string, error)
 	JwtDecode(tokenString string) (map[string]interface{}, error)
+	GetMapData(r *http.Request) (map[string]interface{}, error)
 }
 
 func (j *jwtUtils) JwtEncode(data map[string]interface{}) (string, error) {
@@ -26,6 +29,13 @@ func (j *jwtUtils) JwtDecode(tokenString string) (map[string]interface{}, error)
 
 	dataMap, errMap := jwt.AsMap(context.Background())
 	return dataMap, errMap
+}
+
+func (j *jwtUtils) GetMapData(r *http.Request) (map[string]interface{}, error) {
+	tokenString := strings.Split(r.Header.Get("Authorization"), " ")[1]
+	mapData, err := j.JwtDecode(tokenString)
+
+	return mapData, err
 }
 
 func NewJwtUtils() JwtUtils {
