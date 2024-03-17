@@ -44,6 +44,7 @@ func Router() http.Handler {
 
 			protected.Route("/shop", func(shop chi.Router) {
 				shop.Post("/", shopController.CreateShop)
+				shop.Get("/check-duplicate", shopController.CheckDuplicateShop)
 			})
 		})
 	})

@@ -7,48 +7,48 @@ import "google/protobuf/timestamp.proto";
 option go_package = "grpc/proto";
 
 message User {
-    uint64 ID = 1;
-    uint64 RoleID = 2;  
-	string Username = 3;
-	string Password = 4;
-	string Email = 5;
+    uint64 iD = 1;
+    uint64 roleID = 2;  
+	string username = 3;
+	string password = 4;
+	string email = 5;
   
-    Role Role = 6;
+    Role role = 6;
 
-	google.protobuf.Timestamp CreatedAt = 7;
-	google.protobuf.Timestamp UpdatedAt = 8;
-	google.protobuf.Timestamp DeletedAt = 9;
+	google.protobuf.Timestamp createdAt = 7;
+	google.protobuf.Timestamp updatedAt = 8;
+	google.protobuf.Timestamp deletedAt = 9;
 }
 
 message Role {
-    uint64 ID = 1;
-    string Code = 2;
-	string Name = 3;
+    uint64 iD = 1;
+    string code = 2;
+	string name = 3;
 
-    repeated User Users = 4;
+    repeated User users = 4;
 
-	google.protobuf.Timestamp CreatedAt = 5;
-	google.protobuf.Timestamp UpdatedAt = 6;
-	google.protobuf.Timestamp DeletedAt = 7;
+	google.protobuf.Timestamp createdAt = 5;
+	google.protobuf.Timestamp updatedAt = 6;
+	google.protobuf.Timestamp deletedAt = 7;
 }
 
 message Profile {
-    uint64 ID = 1;
-    uint64 UserID = 2;
-	string Firstname = 3;
-	string Lastname = 4;
-	string Name = 5;
-	string Address = 6;
-	string Gender = 7;
-	google.protobuf.Timestamp Birth = 8;
-	string Phone = 9;
-	string Email = 10;
-	string Picture = 11;
-	string Sub = 12;
+    uint64 iD = 1;
+    uint64 userID = 2;
+	string firstname = 3;
+	string lastname = 4;
+	string name = 5;
+	string address = 6;
+	string gender = 7;
+	google.protobuf.Timestamp birth = 8;
+	string phone = 9;
+	string email = 10;
+	string picture = 11;
+	string sub = 12;
 
-	User User = 13;
+	User user = 13;
 
-	google.protobuf.Timestamp CreatedAt = 14;
-	google.protobuf.Timestamp UpdatedAt = 15;
-	google.protobuf.Timestamp DeletedAt = 16;
+	google.protobuf.Timestamp createdAt = 14;
+	google.protobuf.Timestamp updatedAt = 15;
+	google.protobuf.Timestamp deletedAt = 16;
 }

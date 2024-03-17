@@ -7,7 +7,7 @@ import "proto/model.proto";
 option go_package = "grpc/proto";
 
 message GetProfileReq {
-    uint64 ProfileID = 1;
+    uint64 profileID = 1;
 }
 
 service ProfileService {
