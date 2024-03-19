@@ -9,6 +9,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/render"
 )
@@ -20,8 +21,11 @@ type shopController struct {
 }
 
 type ShopController interface {
+	GetShop(w http.ResponseWriter, r *http.Request)
+	GetTypeProduct(w http.ResponseWriter, r *http.Request)
 	CheckDuplicateShop(w http.ResponseWriter, r *http.Request)
 	CreateShop(w http.ResponseWriter, r *http.Request)
+	CreateTypeProduct(w http.ResponseWriter, r *http.Request)
 }
 
 func (c *shopController) CreateShop(w http.ResponseWriter, r *http.Request) {
@@ -82,6 +86,77 @@ func (c *shopController) CheckDuplicateShop(w http.ResponseWriter, r *http.Reque
 
 	res := Response{
 		Data:    isDuplicate,
+		Message: "OK",
+		Status:  200,
+		Error:   nil,
+	}
+
+	render.JSON(w, r, res)
+}
+
+func (c *shopController) CreateTypeProduct(w http.ResponseWriter, r *http.Request) {
+	var listTypeProduct []request.TypeProductRequest
+	if err := json.NewDecoder(r.Body).Decode(&listTypeProduct); err != nil {
+		badRequest(w, r, err)
+		return
+	}
+
+	newTypeProducts, errTypeProduct := c.shopService.CreateTypeProduct(listTypeProduct)
+	if errTypeProduct != nil {
+		internalServerError(w, r, errTypeProduct)
+		return
+	}
+
+	res := Response{
+		Data:    newTypeProducts,
+		Message: "OK",
+		Status:  200,
+		Error:   nil,
+	}
+
+	render.JSON(w, r, res)
+}
+
+func (c *shopController) GetShop(w http.ResponseWriter, r *http.Request) {
+	mapData, errMapData := c.utilsJWT.GetMapData(r)
+	if errMapData != nil {
+		handleError(w, r, errMapData, 401)
+		return
+	}
+
+	profileID := uint(mapData["profile_id"].(float64))
+	shops, err := c.shopService.GetShop(profileID)
+	if err != nil {
+		internalServerError(w, r, err)
+		return
+	}
+
+	res := Response{
+		Data:    shops,
+		Message: "OK",
+		Status:  200,
+		Error:   nil,
+	}
+
+	render.JSON(w, r, res)
+}
+
+func (c *shopController) GetTypeProduct(w http.ResponseWriter, r *http.Request) {
+	queryValues := r.URL.Query()
+	shopId, errConvert := strconv.Atoi(queryValues.Get("shopId"))
+	if errConvert != nil {
+		badRequest(w, r, errConvert)
+		return
+	}
+
+	typeProducts, err := c.shopService.GetTypeProduct(uint(shopId))
+	if err != nil {
+		internalServerError(w, r, err)
+		return
+	}
+
+	res := Response{
+		Data:    typeProducts,
 		Message: "OK",
 		Status:  200,
 		Error:   nil,

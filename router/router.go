@@ -43,8 +43,12 @@ func Router() http.Handler {
 			protected.Use(middlewares.ValidateExpAccessToken())
 
 			protected.Route("/shop", func(shop chi.Router) {
-				shop.Post("/", shopController.CreateShop)
 				shop.Get("/check-duplicate", shopController.CheckDuplicateShop)
+				shop.Get("/", shopController.GetShop)
+				shop.Get("/type-product", shopController.GetTypeProduct)
+
+				shop.Post("/", shopController.CreateShop)
+				shop.Post("/type-product", shopController.CreateTypeProduct)
 			})
 		})
 	})
