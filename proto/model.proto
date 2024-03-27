@@ -52,3 +52,29 @@ message Profile {
 	google.protobuf.Timestamp updatedAt = 15;
 	google.protobuf.Timestamp deletedAt = 16;
 }
+
+message Shop {
+    uint64 iD = 1;
+    uint64 profileID = 2;
+    string name = 3;
+    string address = 4;
+
+    repeated TypeProduct typeProducts = 5;
+
+    google.protobuf.Timestamp createdAt = 6;
+	google.protobuf.Timestamp updatedAt = 7;
+	google.protobuf.Timestamp deletedAt = 8;
+}
+
+message TypeProduct {
+    uint64 iD = 1;
+    uint64 shopID = 2;
+    string hastag = 3;
+    string name = 4;
+
+    Shop shop = 5;
+
+    google.protobuf.Timestamp createdAt = 6;
+	google.protobuf.Timestamp updatedAt = 7;
+	google.protobuf.Timestamp deletedAt = 8;
+}
